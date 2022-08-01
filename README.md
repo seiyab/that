@@ -17,6 +17,13 @@ that(8)
     .call(add, 9)
     .unwrap();
 // => 23
+
+that("Hello, world")
+    .call$(($) => $.split(" ")) // that(["Hello,", "world"])
+    .call$(($) => $.length) // that(2)
+    .call(increment) // that(3)
+    .unwrap()
+// => 3
 ```
 
 # Installation
