@@ -1,4 +1,4 @@
-import {  that } from ".";
+import { that } from ".";
 
 describe("that", () => {
   it("call", () => {
@@ -39,6 +39,20 @@ describe("that", () => {
           .call$(($) => $.replace("at", "is"))
           .unwrap()
       ).toBe("this");
+    });
+
+    it("place holder", () => {
+      expect(
+        that({
+          a: "a",
+          b: 1,
+          c: null,
+        })
+          .call$(Object.keys)
+          .call$(($) => $.length)
+          .call$(($) => Math.pow($, 2))
+          .unwrap()
+      ).toBe(9);
     });
   });
 
