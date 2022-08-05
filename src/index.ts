@@ -1,6 +1,6 @@
 export type That<T> = {
-  "~>": Call<T>;
-  "|>": Call$<T>;
+  "~>": CallThis<T>;
+  "|>": Pipe<T>;
   "?~>": MaybeCallThis<T>;
   "?|>": MaybePipe<T>;
   ";":  T;
@@ -8,21 +8,21 @@ export type That<T> = {
 
 export function that<T>(x: T): That<T> {
   return {
-    "~>": call,
-    "|>": call$,
+    "~>": callThis,
+    "|>": pipe,
     "?~>": maybeCallThis,
     "?|>": maybePipe,
     ";": x,
   };
 
-  function call<Fn extends FnThis<T>>(
+  function callThis<Fn extends FnThis<T>>(
     fn: Fn,
     ...args: Parameters<Fn>
   ) {
     return that(fn.apply(x, args));
   }
 
-  function call$<Fn extends (x: T, ...args: any[]) => any>(
+  function pipe<Fn extends (x: T, ...args: any[]) => any>(
     fn: Fn,
     ...args: Tail<Parameters<Fn>>
   ) {
@@ -48,12 +48,12 @@ export function that<T>(x: T): That<T> {
   }
 }
 
-type Call<T> = <Fn extends FnThis<T>>(
+type CallThis<T> = <Fn extends FnThis<T>>(
   fn: Fn,
   ...args: Parameters<Fn>
 ) => That<ReturnType<Fn>>;
 
-type Call$<T> = <Fn extends Func<T>>(
+type Pipe<T> = <Fn extends Func<T>>(
   fn: Fn,
   ...args: Tail<Parameters<Fn>>
 ) => That<ReturnType<Fn>>;
