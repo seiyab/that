@@ -6,8 +6,8 @@ describe("that", () => {
       return this.startsWith("a");
     }
 
-    expect(that("abcde")["~>"](f).unwrap()).toBe(true);
-    expect(that("fghij")["~>"](f).unwrap()).toBe(false);
+    expect(that("abcde")["~>"](f)[";"]).toBe(true);
+    expect(that("fghij")["~>"](f)[";"]).toBe(false);
   });
 
   describe("call with parameters", () => {
@@ -16,8 +16,8 @@ describe("that", () => {
         return this.length === l;
       }
 
-      expect(that("this")["~>"](f, 4).unwrap()).toBe(true);
-      expect(that("this")["~>"](f, 5).unwrap()).toBe(false);
+      expect(that("this")["~>"](f, 4)[";"]).toBe(true);
+      expect(that("this")["~>"](f, 5)[";"]).toBe(false);
     });
 
     it("two parameters", () => {
@@ -27,18 +27,16 @@ describe("that", () => {
         throw new Error();
       }
 
-      expect(that(5)["~>"](f, "+", 3).unwrap()).toBe(8);
-      expect(that(7)["~>"](f, "-", 2).unwrap()).toBe(5);
+      expect(that(5)["~>"](f, "+", 3)[";"]).toBe(8);
+      expect(that(7)["~>"](f, "-", 2)[";"]).toBe(5);
     });
   });
 
   describe("|>", () => {
     it("just this", () => {
-      expect(
-        that("that")
-          ["|>"](($) => $.replace("at", "is"))
-          .unwrap()
-      ).toBe("this");
+      expect(that("that")["|>"](($) => $.replace("at", "is"))[";"]).toBe(
+        "this"
+      );
     });
 
     it("place holder", () => {
@@ -50,8 +48,7 @@ describe("that", () => {
         })
           ["|>"](Object.keys)
           ["|>"](($) => $.length)
-          ["|>"](($) => Math.pow($, 2))
-          .unwrap()
+          ["|>"](($) => Math.pow($, 2))[";"]
       ).toBe(9);
     });
   });

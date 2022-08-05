@@ -1,7 +1,7 @@
 export type That<T> = {
   "~>": Call<T>;
   "|>": Call$<T>;
-  unwrap: () => T;
+  ";":  T;
 };
 
 type Call<T> = <Fn extends (this: T, ...args: any[]) => any>(
@@ -18,7 +18,7 @@ export function that<T>(x: T): That<T> {
   return {
     "~>": call,
     "|>": call$,
-    unwrap,
+    ";": x,
   };
 
   function call<Fn extends (this: T, ...args: any[]) => any>(
@@ -33,10 +33,6 @@ export function that<T>(x: T): That<T> {
     ...args: Tail<Parameters<Fn>>
   ) {
     return that(fn(x, ...args));
-  }
-
-  function unwrap(): T {
-    return x;
   }
 }
 

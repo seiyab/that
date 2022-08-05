@@ -15,14 +15,14 @@ function add(this: number, another: number): number {
 that(8)
     ['~>'](increment)
     ['~>'](add, 5)
-    ['~>'](add, 9)
-    .unwrap();
+    ['~>'](add, 9)[';'];
 // => 23
 
 // Hack pipe
-that(3)
-    ['|>'](($) => Math.pow($, 2))
-    .unwrap()
+that('Hello, world!')
+    ['|>'](($) => $.split(" "))
+    ['|>'](($) => $.length)
+    ['|>'](($) => Math.pow(3, $))[';'];
 // => 9
 ```
 
