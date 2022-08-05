@@ -1,13 +1,13 @@
 import { that } from ".";
 
 describe("that", () => {
-  it("call", () => {
+  it("~>", () => {
     function f(this: string): boolean {
       return this.startsWith("a");
     }
 
-    expect(that("abcde").call(f).unwrap()).toBe(true);
-    expect(that("fghij").call(f).unwrap()).toBe(false);
+    expect(that("abcde")["~>"](f).unwrap()).toBe(true);
+    expect(that("fghij")["~>"](f).unwrap()).toBe(false);
   });
 
   describe("call with parameters", () => {
@@ -16,8 +16,8 @@ describe("that", () => {
         return this.length === l;
       }
 
-      expect(that("this").call(f, 4).unwrap()).toBe(true);
-      expect(that("this").call(f, 5).unwrap()).toBe(false);
+      expect(that("this")["~>"](f, 4).unwrap()).toBe(true);
+      expect(that("this")["~>"](f, 5).unwrap()).toBe(false);
     });
 
     it("two parameters", () => {
@@ -27,16 +27,16 @@ describe("that", () => {
         throw new Error();
       }
 
-      expect(that(5).call(f, "+", 3).unwrap()).toBe(8);
-      expect(that(7).call(f, "-", 2).unwrap()).toBe(5);
+      expect(that(5)["~>"](f, "+", 3).unwrap()).toBe(8);
+      expect(that(7)["~>"](f, "-", 2).unwrap()).toBe(5);
     });
   });
 
-  describe("call$", () => {
+  describe("|>", () => {
     it("just this", () => {
       expect(
         that("that")
-          .call$(($) => $.replace("at", "is"))
+          ["|>"](($) => $.replace("at", "is"))
           .unwrap()
       ).toBe("this");
     });
@@ -48,9 +48,9 @@ describe("that", () => {
           b: 1,
           c: null,
         })
-          .call$(Object.keys)
-          .call$(($) => $.length)
-          .call$(($) => Math.pow($, 2))
+          ["|>"](Object.keys)
+          ["|>"](($) => $.length)
+          ["|>"](($) => Math.pow($, 2))
           .unwrap()
       ).toBe(9);
     });
@@ -61,12 +61,12 @@ describe("that", () => {
       return null;
     }
     // @ts-expect-error
-    that(1).call(f).unwrap();
+    that(1)["~>"](f).unwrap();
 
     function g(this: string, another: number) {
       return null;
     }
     // @ts-expect-error
-    that("that").call(g).unwrap();
+    that("that")["~>"](g).unwrap();
   });
 });

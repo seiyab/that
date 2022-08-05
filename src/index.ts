@@ -1,6 +1,6 @@
 export type That<T> = {
-  call: Call<T>;
-  call$: Call$<T>;
+  "~>": Call<T>;
+  "|>": Call$<T>;
   unwrap: () => T;
 };
 
@@ -16,8 +16,8 @@ type Call$<T> = <Fn extends (x: T, ...args: any[]) => any>(
 
 export function that<T>(x: T): That<T> {
   return {
-    call,
-    call$,
+    "~>": call,
+    "|>": call$,
     unwrap,
   };
 
