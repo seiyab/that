@@ -24,6 +24,12 @@ that('Hello, world!')
     ['|>'](($) => $.length)
     ['|>'](($) => Math.pow(3, $))[';'];
 // => 9
+
+// Optional chain
+that([1, 2, 3, 4])
+    ['|>'](($) => $.find((x) => x < 0))
+    ['?|>'](($) => $ + 2)[';'];
+// => undefined
 ```
 
 # Installation

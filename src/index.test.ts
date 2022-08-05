@@ -53,17 +53,67 @@ describe("that", () => {
     });
   });
 
+  describe("?~>", () => {
+    function oddIsNull(this: number) {
+      if (this % 2 === 1) return null;
+      return this;
+    }
+    function add(this: number, another: number) {
+      return this + another;
+    }
+
+    it("exists", () => {
+      expect(that(4)["~>"](oddIsNull)["?~>"](add, 3)["?~>"](add, 1)[";"]).toBe(
+        8
+      );
+    });
+
+    it("null", () => {
+      expect(that(1)["~>"](oddIsNull)["?~>"](add, 3)["?~>"](add, 1)[";"]).toBe(
+        null
+      );
+    });
+
+    it("undefined", () => {
+      expect(that<number | undefined>(undefined)["?~>"](add, 3)[";"]).toBe(
+        undefined
+      );
+    });
+  });
+
+  describe("?|>", () => {
+    it("exists", () => {
+      expect(
+        that([0, 1, 2, 3, 4])
+          ["|>"](($) => $.find((x) => x % 3 === 2))
+          ["?|>"](($) => $ * 4)[";"]
+      ).toBe(8);
+    });
+
+    it("undefined", () => {
+      expect(
+        that([0, 1, 3, 4])
+          ["|>"](($) => $.find((x) => x % 3 === 2))
+          ["?|>"](($) => $ * 4)[";"]
+      ).toBe(undefined);
+    });
+
+    it("null", () => {
+      expect(that<string | null>(null)["?|>"](($) => $.length)[";"]).toBe(null);
+    });
+  });
+
   it.skip("types", () => {
     function f(this: string) {
       return null;
     }
     // @ts-expect-error
-    that(1)["~>"](f).unwrap();
+    that(1)["~>"](f)[";"];
 
     function g(this: string, another: number) {
       return null;
     }
     // @ts-expect-error
-    that("that")["~>"](g).unwrap();
+    that("that")["~>"](g)[";"];
   });
 });
