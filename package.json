@@ -2,9 +2,11 @@
   "name": "that",
   "version": "0.0.1",
   "description": "that",
-  "main": "index.js",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "build": "rm -r lib && tsc"
   },
   "author": "seiyab",
   "license": "MIT",
