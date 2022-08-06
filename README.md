@@ -33,4 +33,6 @@ that([1, 2, 3, 4])
 ```
 
 # Installation
-`that` is not published yet.
+```bash
+npm install @seiyab/that
+```
