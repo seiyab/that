@@ -1,6 +1,6 @@
 {
   "name": "that",
-  "version": "0.0.1",
+  "version": "0.1.0-alpha.0",
   "description": "that",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
