@@ -6,7 +6,8 @@
   "types": "lib/index.d.ts",
   "scripts": {
     "test": "jest",
-    "build": "rm -r lib && tsc"
+    "build": "rm -r lib && tsc",
+    "preversion": "jest"
   },
   "author": "seiyab",
   "license": "MIT",
